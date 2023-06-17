@@ -5,6 +5,7 @@
 
 const { getDestFileName } = require('./config');
 const transform = require('./transform');
+const { DEFAULT_FC_TYPE, DEFAULT_FC_CONTENT } = require('./constants')
 
 module.exports = {
     readSVGs(config) {
@@ -90,5 +91,9 @@ module.exports = {
 
         const indexContent = indexFileImports + `\nexport const ICONS = {\n${iconsObjectMembers}};`;
         fs.writeFileSync(indexFileName, indexContent);
+
+        if (config.fcType === DEFAULT_FC_TYPE) {
+            fs.writeFileSync(path.join(dest, 'types.ts'), DEFAULT_FC_CONTENT);
+        }
     }
 }
