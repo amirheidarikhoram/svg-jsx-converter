@@ -46,13 +46,13 @@ function stringifyAttributes(attributes = {}) {
  * @param {Object} node Root node.
  * @returns {string}
  */
-function stringify(node) {
+function stringify(node, rootLevel = false) {
   if (isString(node)) {
     return node;
   }
 
   const attributes = stringifyAttributes(node.attributes);
-  const buffer = `<${node.name}${attributes}>`;
+  const buffer = `<${node.name}${attributes} ${rootLevel ? "{...props}" : ""}>`;
 
   const childrensBuffer = node.children.reduce((accumulator, childrenNode) => {
     return accumulator + stringify(childrenNode);
