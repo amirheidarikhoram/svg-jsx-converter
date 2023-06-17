@@ -48,6 +48,10 @@ module.exports = {
         const state = require('./tracking').getTrackingState(src);
         const svgNames = Object.keys(svgs);
 
+        const indexFileName = path.join(dest, `index.${type.replace('x', '')}`);
+        let indexFileImports = ''
+        let iconsObjectMembers = ''
+
         if (!fs.existsSync(dest)) {
             fs.mkdirSync(dest, { recursive: true });
         }
@@ -59,8 +63,12 @@ module.exports = {
             const svgName = svgNames[i]
             const svg = svgs[svgName];
             const svgSrc = svg.svgSrc;
-            const svgDest = path.join(dest, svgName.replace('.svg', `.${type}`));
+            const basename = path.basename(svgName, '.svg');
+            const xsxFileName = svgName.replace('.svg', `.${type}`)
+            const svgDest = path.join(dest, xsxFileName);
             const svgLastModified = fs.statSync(path.join(src, svgName)).mtimeMs;
+
+            const fnName = svgName.replace('.svg', '').split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')
 
             state[svgName] = state[svgName] ? { ...state[svgName], svgLastModified } : {
                 svgLastModified
@@ -68,13 +76,19 @@ module.exports = {
 
             fs.writeFileSync(svgDest, await transform(svgSrc, {
                 export: "named",
-                fnName: svgName.replace('.svg', '').split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(''),
+                fnName,
                 imports,
                 memo,
                 fcType,
             }));
+
+            indexFileImports += `import {${fnName}} from './${basename}';\n`
+            iconsObjectMembers += `  ${fnName},\n`
         }
 
         require('./tracking').updateTrackingState(state, src);
+
+        const indexContent = indexFileImports + `\nexport const ICONS = {\n${iconsObjectMembers}};`;
+        fs.writeFileSync(indexFileName, indexContent);
     }
 }
