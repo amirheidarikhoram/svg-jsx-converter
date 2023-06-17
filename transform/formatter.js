@@ -23,7 +23,7 @@ function reactify(svg, config) {
     imports: [config.imports, config.memo ? `import {memo} from 'react';` : undefined].filter(i => i).join('\n'),
     parentComponent: config.memo ? `React.PureComponent` : `React.Component`,
     fnName: config.fnName,
-    fcType: config.fcType === "default" ? DEFAULT_FC_TYPE : onfig.fcType ? `: ${config.fcType}` : '',
+    fcType: config.fcType === "default" ? DEFAULT_FC_TYPE : config.fcType ? `: ${config.fcType}` : '',
     memoized: config.memo ? `const Memoized${config.fnName} = memo(${config.fnName})` : ``,
     exportComponent: config.memo ? `Memoized${config.fnName} as ${config.fnName}` : config.fnName,
   };
