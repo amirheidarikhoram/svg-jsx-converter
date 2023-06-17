@@ -4,11 +4,13 @@
   "version": "0.1.0",
   "description": "Easy solution to use SVG as JSX/TSX with minimum effort",
   "main": "index.js",
-  "repository": "https://github.com/balajmarius/svg2jsx-gui.git",
+  "repository": "https://github.com/amirheidarikhoram/svg-jsx-converter",
   "author": "Amir Heidari Khoram <amir.heidari.khoram@gmail.com>",
   "license": "MIT",
+  "bin": {
+    "sjc": "./index.js"
+  },
   "dependencies": {
-    "args": "^5.0.3",
     "css-to-object": "1.1.0",
     "lodash.camelcase": "4.3.0",
     "lodash.isplainobject": "4.0.6",
