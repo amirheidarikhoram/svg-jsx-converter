@@ -1,47 +1,42 @@
+/**
+ * @typedef {{
+ *  imports: string[],
+ *  export: "default" | "named",
+ *  fnName: string
+ *  fcType?: string,
+ *  memo: boolean
+ * }} ReactifyConfig
+ */
+
 const prettier = require('prettier');
 const template = require('lodash.template');
 
 /**
- * React component templates.
- * @readonly
- * @type {Map<string, string>}
- */
-const TEMPLATES = {
-  class: `
-    import React from "react";
-
-    class Icon extends <%= parentComponent %> {
-      render() {
-        return <%= svg %>;
-      }
-    }
-
-    export default Icon;
-  `,
-  functional: `
-    import React from "react";
-    
-    function Icon() {
-      return <%= svg %>;
-    }
-
-    export default <%= exportComponent %>;
-  `,
-};
-
-/**
  * Creates React component.
  * @param {string} svg Transformed SVG string.
- * @param {string="functional","class"} config.type Desired component type.
+ * @param {ReactifyConfig} config
  * @return {string}
  */
-function reactify(svg, { type = 'functional', memo }) {
+function reactify(svg, config) {
   const data = {
-    parentComponent: memo ? `React.PureComponent` : `React.Component`,
-    exportComponent: memo ? `React.memo(Icon)` : `Icon`,
+    imports: [config.imports, config.memo ? `import {memo} from 'react'` : undefined].filter(i => i).join('\n'),
+    parentComponent: config.memo ? `React.PureComponent` : `React.Component`,
+    fnName: config.fnName,
+    fcType: config.fcType ? `:${config.fcType}` : '',
+    memoized: config.memo ? `const Memoized${config.fnName} = memo(${config.fnName})` : ``,
+    exportComponent: config.memo ? `Memoized${config.fnName}` : config.fnName,
   };
 
-  const compile = template(TEMPLATES[type]);
+  const TEMPLATE = `
+  <%= imports %>
+  
+  const <%= fnName %><%= fcType %> = (props) => {
+    return <%= svg %>;
+  }
+
+  ${config.export === "default" ? 'export default <%= exportComponent %>' : 'export {<%= exportComponent %>}'}
+`
+  const compile = template(TEMPLATE);
   const component = compile({
     ...data,
     svg,
@@ -59,7 +54,7 @@ function reactify(svg, { type = 'functional', memo }) {
 function format(svg, config) {
   const component = reactify(svg, config);
   const formatted = prettier.format(component, {
-    ...config,
+    // TODO: add prettier config suppoer
     parser: 'babel',
   });
 
