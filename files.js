@@ -92,7 +92,7 @@ module.exports = {
         const indexContent = indexFileImports + `\nexport const ICONS = {\n${iconsObjectMembers}};`;
         fs.writeFileSync(indexFileName, indexContent);
 
-        if (config.fcType === DEFAULT_FC_TYPE) {
+        if (config.fcType === "default") {
             fs.writeFileSync(path.join(dest, 'types.ts'), DEFAULT_FC_CONTENT);
         }
     }
