@@ -1,5 +1,6 @@
 /** @typedef {{src: string, dest: string, type: 'tsx' | 'jsx', imports: string[], fcType?: string, memo: boolean}} Config */
 
+const fs = require("fs")
 const path = require("path")
 
 /**
@@ -20,7 +21,7 @@ module.exports = {
 
         const configPath = path.join(process.cwd(), 'sjc.config.js')
 
-        if (!require.resolve(configPath)) {
+        if (!fs.existsSync(configPath)) {
             console.error("Error: sjc.config.js not found")
             process.exit(1)
         }
