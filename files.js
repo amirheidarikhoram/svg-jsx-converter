@@ -5,7 +5,7 @@
 
 const { getDestFileName } = require('./config');
 const transform = require('./transform');
-const { DEFAULT_FC_TYPE, DEFAULT_FC_CONTENT } = require('./constants')
+const { DEFAULT_FC_CONTENT, ICON_DECLARATION } = require('./constants')
 
 module.exports = {
     readSVGs(config) {
@@ -42,14 +42,14 @@ module.exports = {
      * */
     async generateXSXFiles(svgs, config) {
 
-        const { src, dest, type, imports, memo, fcType } = config
+        const { src, dest, type, imports, memo, fcType, component } = config
 
         const fs = require('fs');
         const path = require('path');
         const state = require('./tracking').getTrackingState(src);
         const svgNames = Object.keys(svgs);
 
-        const indexFileName = path.join(dest, `index.${type.replace('x', '')}`);
+        const indexFileName = path.join(dest, `index.${component ? type : type.replace('x', '')}`);
         let indexFileImports = ''
         let iconsObjectMembers = ''
 
@@ -89,10 +89,15 @@ module.exports = {
 
         require('./tracking').updateTrackingState(state, src);
 
-        const indexContent = indexFileImports + `\nexport const ICONS = {\n${iconsObjectMembers}};`;
+        let indexContent = indexFileImports + `\nexport const ICONS = {\n${iconsObjectMembers}};`;
+
+        if (component) {
+            indexContent += `\n\n${ICON_DECLARATION}`;
+        }
+
         fs.writeFileSync(indexFileName, indexContent);
 
-        if (config.fcType === "default") {
+        if (fcType === "default") {
             fs.writeFileSync(path.join(dest, 'types.ts'), DEFAULT_FC_CONTENT);
         }
     }

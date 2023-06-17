@@ -1,4 +1,4 @@
-/** @typedef {{src: string, dest: string, type: 'tsx' | 'jsx', imports: string[], fcType?: string, memo: boolean}} Config */
+/** @typedef {{src: string, dest: string, type: 'tsx' | 'jsx', imports: string[], fcType?: string, memo: boolean, component: boolean}} Config */
 
 const fs = require("fs")
 const path = require("path")
@@ -11,6 +11,7 @@ const DEFAULT_CONFIG = {
     imports: [],
     memo: false,
     fcType: undefined,
+    component: true,
 }
 
 module.exports = {
