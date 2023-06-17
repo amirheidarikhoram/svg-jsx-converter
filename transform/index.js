@@ -1,8 +1,8 @@
-const clean = require('./lib/cleaner');
-const parse = require('./lib/parser');
-const transform = require('./lib/transformer');
-const stringify = require('./lib/stringifier');
-const format = require('./lib/formatter');
+const clean = require('./cleaner');
+const parse = require('./parser');
+const transform = require('./transformer');
+const stringify = require('./stringifier');
+const format = require('./formatter');
 
 /**
  * Clean-up and transform SVG into valid JSX.
