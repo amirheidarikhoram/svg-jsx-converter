@@ -20,7 +20,7 @@ const { DEFAULT_FC_TYPE } = require("../constants")
  */
 function reactify(svg, config) {
   const data = {
-    imports: [config.imports, config.memo ? `import {memo} from 'react';` : undefined].filter(i => i).join('\n'),
+    imports: [...config.imports, config.memo ? `import {memo} from 'react';` : undefined].filter(i => i).join('\n'),
     parentComponent: config.memo ? `React.PureComponent` : `React.Component`,
     fnName: config.fnName,
     fcType: config.fcType === "default" ? DEFAULT_FC_TYPE : config.fcType ? `: ${config.fcType}` : '',
