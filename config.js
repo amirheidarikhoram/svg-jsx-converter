@@ -17,7 +17,15 @@ module.exports = {
      * @returns {Config}
      * */
     getConfig() {
-        let config = require(`${process.cwd()}/sjc.config.js`)
+
+        const configPath = path.join(process.cwd(), 'sjc.config.js')
+
+        if (!require.resolve(configPath)) {
+            console.error("Error: sjc.config.js not found")
+            process.exit(1)
+        }
+
+        let config = require(configPath)
         config = { ...DEFAULT_CONFIG, ...config }
 
         if (!config.src || !config.dest) {
