@@ -41,8 +41,7 @@ module.exports = {
      * */
     async generateXSXFiles(svgs, config) {
 
-        const { src, dest, type } = config
-
+        const { src, dest, type, imports, memo, fcType } = config
 
         const fs = require('fs');
         const path = require('path');
@@ -54,10 +53,13 @@ module.exports = {
         }
 
         for (let i = 0; i < svgNames.length; i++) {
+
+            if (!svgs[svgNames[i]].shouldUpdate) continue;
+
             const svgName = svgNames[i]
             const svg = svgs[svgName];
             const svgSrc = svg.svgSrc;
-            const svgDest = path.join(dest, svgName.replace('.svg', `.${config.type}`));
+            const svgDest = path.join(dest, svgName.replace('.svg', `.${type}`));
             const svgLastModified = fs.statSync(path.join(src, svgName)).mtimeMs;
 
             state[svgName] = state[svgName] ? { ...state[svgName], svgLastModified } : {
@@ -67,9 +69,9 @@ module.exports = {
             fs.writeFileSync(svgDest, await transform(svgSrc, {
                 export: "named",
                 fnName: svgName.replace('.svg', '').split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(''),
-                imports: [],
-                memo: false,
-                fcType: undefined,
+                imports,
+                memo,
+                fcType,
             }));
         }
 

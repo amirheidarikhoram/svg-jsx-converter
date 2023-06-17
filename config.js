@@ -1,4 +1,4 @@
-/** @typedef {{src: string, dest: string, type: 'tsx' | 'jsx'}} Config */
+/** @typedef {{src: string, dest: string, type: 'tsx' | 'jsx', imports: string[], fcType?: string, memo: boolean}} Config */
 
 const path = require("path")
 
@@ -6,7 +6,10 @@ const path = require("path")
  * @type {Partial<Config>}
  */
 const DEFAULT_CONFIG = {
-    type: "tsx"
+    type: "tsx",
+    imports: [],
+    memo: false,
+    fcType: undefined,
 }
 
 module.exports = {
