@@ -24,7 +24,7 @@ function reactify(svg, config) {
     fnName: config.fnName,
     fcType: config.fcType ? `:${config.fcType}` : '',
     memoized: config.memo ? `const Memoized${config.fnName} = memo(${config.fnName})` : ``,
-    exportComponent: config.memo ? `Memoized${config.fnName}` : config.fnName,
+    exportComponent: config.memo ? `Memoized${config.fnName} as ${config.fnName}` : config.fnName,
   };
 
   const TEMPLATE = `
@@ -34,6 +34,7 @@ function reactify(svg, config) {
     return <%= svg %>;
   }
 
+  <%= memoized %>
   ${config.export === "default" ? 'export default <%= exportComponent %>' : 'export {<%= exportComponent %>}'}
 `
   const compile = template(TEMPLATE);
