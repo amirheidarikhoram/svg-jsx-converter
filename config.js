@@ -1,26 +1,18 @@
-/** @typedef {{src: string, dest: string, type: 'tsx' | 'jsx', imports: string[], fcType?: string, memo: boolean, component: boolean}} Config */
+/**
+ * @typedef {import('./constants').Config} Config
+ */
 
 const fs = require("fs")
 const path = require("path")
-
-/**
- * @type {Partial<Config>}
- */
-const DEFAULT_CONFIG = {
-    type: "tsx",
-    imports: [],
-    memo: false,
-    fcType: undefined,
-    component: true,
-}
+const constants = require('./constants')
 
 module.exports = {
     /**
      * @returns {Config}
      * */
-    getConfig() {
+    getConfig(argsPath) {
 
-        const configPath = path.join(process.cwd(), 'sjc.config.js')
+        const configPath = argsPath ? path.resolve(argsPath) : path.join(process.cwd(), 'sjc.config.js')
 
         if (!fs.existsSync(configPath)) {
             console.error("Error: sjc.config.js not found")
@@ -28,7 +20,7 @@ module.exports = {
         }
 
         let config = require(configPath)
-        config = { ...DEFAULT_CONFIG, ...config }
+        config = { ...constants.DEFAULT_CONFIG, ...config }
 
         if (!config.src || !config.dest) {
             console.error("Error: src and dest are required in config")

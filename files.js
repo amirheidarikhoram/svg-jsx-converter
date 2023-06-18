@@ -5,7 +5,7 @@
 
 const { getDestFileName } = require('./config');
 const transform = require('./transform');
-const { DEFAULT_FC_CONTENT, ICON_DECLARATION } = require('./constants')
+const { DEFAULT_FC_CONTENT, ICON_DECLARATION_TSX, ICON_DECLARATION_JSX } = require('./constants')
 const fs = require('fs');
 const path = require('path');
 
@@ -101,7 +101,7 @@ module.exports = {
         const componentFileName = path.join(config.dest, `icon.component.${config.type}`)
 
         if (config.component) {
-            fs.writeFileSync(componentFileName, ICON_DECLARATION);
+            fs.writeFileSync(componentFileName, config.type === "tsx" ? ICON_DECLARATION_TSX : ICON_DECLARATION_JSX);
         }
     },
     /**
