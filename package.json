@@ -3,12 +3,12 @@
   "name": "svg-jsx-converter",
   "version": "0.1.0",
   "description": "Easy solution to use SVG as JSX/TSX with minimum effort",
-  "main": "index.js",
+  "main": "sjc.js",
   "repository": "https://github.com/amirheidarikhoram/svg-jsx-converter",
   "author": "Amir Heidari Khoram <amir.heidari.khoram@gmail.com>",
   "license": "MIT",
   "bin": {
-    "sjc": "./index.js"
+    "sjc": "./sjc.js"
   },
   "dependencies": {
     "args": "^5.0.3",
