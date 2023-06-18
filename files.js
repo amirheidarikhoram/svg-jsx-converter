@@ -78,7 +78,7 @@ module.exports = {
                 fnName,
                 imports,
                 memo,
-                fcType,
+                fcType: type === "tsx" ? fcType : undefined,
             }));
 
             indexFileImports += `import {${fnName}} from './${basename}';\n`
@@ -108,7 +108,7 @@ module.exports = {
      * @param {Config} config 
      */
     generateTypes(config) {
-        if (config.fcType === "default") {
+        if (config.fcType === "default" && config.type === "tsx") {
             fs.writeFileSync(path.join(config.dest, 'types.ts'), DEFAULT_FC_CONTENT);
         }
     }
