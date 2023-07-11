@@ -17,10 +17,10 @@ args.option(
         const fs = require('fs');
         const constants = require('./constants');
 
-        const configPath = path.join(options.config ? path.resolve(options.config) : process.cwd(), 'sjc.config.js');
+        const configPath = path.join(options.config ? path.resolve(options.config) : process.cwd(), 'sjc.config.cjs');
 
         if (fs.existsSync(configPath)) {
-            console.error("Error: sjc.config.js already exists")
+            console.error("Error: sjc.config.cjs already exists")
             process.exit(1)
         }
 

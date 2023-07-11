@@ -12,10 +12,10 @@ module.exports = {
      * */
     getConfig(argsPath) {
 
-        const configPath = argsPath ? path.resolve(argsPath) : path.join(process.cwd(), 'sjc.config.js')
+        const configPath = argsPath ? path.resolve(argsPath) : path.join(process.cwd(), 'sjc.config.cjs')
 
         if (!fs.existsSync(configPath)) {
-            console.error("Error: sjc.config.js not found")
+            console.error("Error: sjc.config.cjs not found")
             process.exit(1)
         }
 
