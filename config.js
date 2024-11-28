@@ -35,8 +35,8 @@ module.exports = {
      * @param {Config} config 
      */
     getDestFileName(fileName, config) {
-        const config = path.join(config.dest, fileName.replace('.svg', `.${config.type}`));
+        const configPath = path.join(config.dest, fileName.replace('.svg', `.${config.type}`));
 
-        return config
+        return configPath
     }
 }
