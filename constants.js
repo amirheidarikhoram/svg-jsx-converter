@@ -4,8 +4,7 @@ module.exports = {
   DEFAULT_FC_TYPE: 'SVGFC',
   DEFAULT_FC_CONTENT: `import React from 'react';
 export type SVGFC = (props: React.SVGProps<SVGSVGElement>) => React.ReactNode;`,
-  ICON_DECLARATION_TSX: `import React from 'react';
-import {ICONS} from '.';
+  ICON_DECLARATION_TSX: `import {ICONS} from '.';
 
 interface IconProps {
   name: keyof typeof ICONS;
@@ -15,8 +14,7 @@ export function Icon (props: IconProps) {
   const IconX = ICONS[props.name];    
   return <IconX />;
 }`,
-  ICON_DECLARATION_JSX: `import React from 'react';
-import {ICONS} from '.';
+  ICON_DECLARATION_JSX: `import {ICONS} from '.';
 
 export function Icon ({name}) {
   const IconX = ICONS[name];    
