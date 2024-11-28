@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "svg-jsx-converter",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Easy solution to use SVG as JSX/TSX with minimum effort",
   "main": "sjc.js",
   "repository": "https://github.com/amirheidarikhoram/svg-jsx-converter",
