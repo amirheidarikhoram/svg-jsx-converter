@@ -31,6 +31,7 @@ export function Icon ({name}) {
     memo: false,
     fcType: "default",
     component: true,
+    cleanupIDs: true
   },
   DEFAULT_CONFIG_CONTENT: `module.exports = {
     src: './src/assets/icons',
@@ -40,5 +41,6 @@ export function Icon ({name}) {
     memo: false,
     fcType: 'default',
     component: true,
+    cleanupIDs: true
 }`
 }

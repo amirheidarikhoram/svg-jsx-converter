@@ -42,7 +42,7 @@ module.exports = {
      * */
     async generateXSXFiles(svgs, config) {
 
-        const { src, dest, type, imports, memo, fcType, component } = config
+        const { src, dest, type, imports, memo, fcType, component, cleanupIDs } = config
 
         const state = require('./tracking').getTrackingState(src);
         const svgNames = Object.keys(svgs);
@@ -79,6 +79,7 @@ module.exports = {
                 imports,
                 memo,
                 fcType: type === "tsx" ? fcType : undefined,
+                cleanupIDs
             }));
 
             indexFileImports += `import {${fnName}} from './${basename}';\n`
